@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-
-import { COLORS, WEIGHTS } from '../../constants';
+import Icon from '../Icon';
+import { COLORS, WEIGHTS, QUERIES } from '../../constants';
 import Logo from '../Logo';
 import SuperHeader from '../SuperHeader';
+import UnstyledButton from '../UnstyledButton';
 import MobileMenu from '../MobileMenu';
 
 const Header = () => {
@@ -29,10 +30,23 @@ const Header = () => {
           <NavLink href="/kids">Kids</NavLink>
           <NavLink href="/collections">Collections</NavLink>
         </Nav>
-        <Side />
+        <Side>
+          <IconGroup>
+            <UnstyledButton>
+              <Icon id="shopping-bag" size={24} strokeWidth={1.5} />
+            </UnstyledButton>
+            <UnstyledButton>
+              <Icon id="search" size={24} strokeWidth={1.5} />
+            </UnstyledButton>
+            <UnstyledButton onClick={() => setShowMobileMenu(true)}>
+              <Icon id="menu" size={24} strokeWidth={1.5} />
+            </UnstyledButton>
+          </IconGroup>
+        </Side>
       </MainHeader>
 
       <MobileMenu
+        title="Menu"
         isOpen={showMobileMenu}
         onDismiss={() => setShowMobileMenu(false)}
       />
@@ -46,16 +60,41 @@ const MainHeader = styled.div`
   padding: 18px 32px;
   height: 72px;
   border-bottom: 1px solid ${COLORS.gray[300]};
+
+  @media ${QUERIES.tabletAndDown} {
+    border-top: 4px solid ${COLORS.gray[900]};
+    align-items: center;
+  }
+  @media ${QUERIES.phoneAndDown} {
+    padding: 18px 16px;
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 48px;
   margin: 0px 48px;
+  @media ${QUERIES.tabletAndDown} {
+    display: none;
+  }
 `;
 
 const Side = styled.div`
   flex: 1;
+`;
+
+const IconGroup = styled.div`
+  display: none;
+  @media ${QUERIES.tabletAndDown} {
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-start;
+    gap: 24px;
+    color: ${COLORS.gray[900]};
+  }
+  @media ${QUERIES.phoneAndDown} {
+    gap: 16px;
+  }
 `;
 
 const NavLink = styled.a`
